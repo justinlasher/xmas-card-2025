@@ -32,7 +32,7 @@ function App() {
   const initialSyncDone = useRef(false);
 
   const { rive, RiveComponent } = useRive({
-    src: '/src/assets/christmas_card.riv',
+    src: '/public/christmas_card.riv',
     stateMachines: STATE_MACHINE_NAME,
     autoplay: true,
     autoBind: true,
