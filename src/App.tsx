@@ -8,7 +8,7 @@ import {
   useViewModelInstanceString, 
   useViewModelInstanceColor,
   useViewModelInstanceNumber
-} from 'rive-react';
+} from '@rive-app/react-webgl2';
 
 const initialVM: ViewModel = {
   color1: '#ff0000',
@@ -116,14 +116,11 @@ function App() {
   useEffect(() => {
     if (rive) {
       console.log('Rive loaded');
+      if (vmInstance && !initialSyncDone.current) {
+        handleVMChange(vm);
+        initialSyncDone.current = true;
+      }
       rive.resizeDrawingSurfaceToCanvas();
-    }
-  }, [rive]);
-
-  useEffect(() => {
-    if (rive && vmInstance && !initialSyncDone.current) {
-      handleVMChange(vm);
-      initialSyncDone.current = true;
     }
   }, [rive, vmInstance]);
 
