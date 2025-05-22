@@ -9,19 +9,20 @@ import {
   useViewModelInstanceColor,
   useViewModelInstanceNumber
 } from '@rive-app/react-webgl2';
+// } from 'rive-react';
 
 const initialVM: ViewModel = {
-  color1: '#ff0000',
-  color2: '#00ff00',
-  color3: '#0000ff',
-  color4: '#ffff00',
-  color5: '#00ffff',
+  color1: '#8B0000', // Dark red
+  color2: '#006400', // Dark green
+  color3: '#00008B', // Dark blue
+  color4: '#B8860B', // Dark goldenrod
+  color5: '#008B8B', // Dark cyan
   stockingAmt: 3,
-  name1: 'Justin',
-  name2: 'Kelsey',
-  name3: 'Mia',
-  name4: 'Milo',
-  name5: 'Ilo',
+  name1: 'Santa',
+  name2: 'Buddy',
+  name3: 'Jovie',
+  name4: 'Walter',
+  name5: 'Miles',
 };
 
 const STATE_MACHINE_NAME = 'State Machine 1';
@@ -75,33 +76,33 @@ function App() {
   ];
 
   const handleVMChange = (newVM: ViewModel) => {
-    console.log('handleVMChange', newVM);
+    // console.log('handleVMChange', newVM);
     setVM(newVM);
     
     colorInputs?.forEach((input, i) => {
       if (input) {
-        console.log(newVM[`color${i + 1}`]);
+        // console.log(newVM[`color${i + 1}`]);
         const rgb = hexToRgb(newVM[`color${i + 1}`]);
         if (rgb) {
           input.setRgb(rgb.r, rgb.g, rgb.b);
         }
-        console.log(input.value);
+        // console.log(input.value);
       }
     });
   
     nameInputs?.forEach((input, i) => {
       if (input) {
-        console.log(newVM[`name${i + 1}`]);
+        // console.log(newVM[`name${i + 1}`]);
         input.setValue(newVM[`name${i + 1}`]);
-        console.log(input.value);
+        // console.log(input.value);
       }
     });
   
     if (stockingAmtInput) {
       stockingAmtInput.setValue(newVM.stockingAmt);
-      console.log(stockingAmtInput.value);
+      // console.log(stockingAmtInput.value);
     }
-
+    // console.log('Syncing VM done');
   };
 
   const hexToRgb = (hex: string) => {
@@ -117,10 +118,18 @@ function App() {
     if (rive) {
       console.log('Rive loaded');
       if (vmInstance && !initialSyncDone.current) {
-        handleVMChange(vm);
-        initialSyncDone.current = true;
+        setTimeout(() => {
+          // console.log('vmInstance', vmInstance);
+          // console.log('initialVM', initialVM);
+          // console.log('Syncing VM');
+          handleVMChange(initialVM);
+          initialSyncDone.current = true;
+        }, 100);
       }
+      // console.log('Resizing canvas');
       rive.resizeDrawingSurfaceToCanvas();
+    } else {
+      // console.log('Rive not loaded');
     }
   }, [rive, vmInstance]);
 
